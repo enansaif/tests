@@ -1,8 +1,9 @@
 define([
     'uiLayout',
     'Magento_Checkout/js/model/quote',
-    'Magento_Ui/js/form/form'
-], function (layout, quote) {
+    'Magento_Ui/js/form/form',
+    'ko'
+], function (layout, quote, Component, ko) {
     'use strict';
 
     return function (Shipping) {
@@ -10,7 +11,19 @@ define([
             initialize: function () {
                 this._super();
 
-                console.log('✅ Custom field mixin loaded');
+                // Create a KO observable for the field
+                var customFieldValue = ko.observable('');
+
+                // Watch and store in quote object
+                customFieldValue.subscribe(function (value) {
+                    var shippingAddress = quote.shippingAddress();
+                    if (shippingAddress) {
+                        shippingAddress.customAttributes = shippingAddress.customAttributes || {};
+                        shippingAddress.customAttributes['custom_field'] = { value: value };
+                        shippingAddress['custom_field'] = value;
+                        console.log('✅ Bound to quote.shippingAddress().custom_field:', value);
+                    }
+                });
 
                 layout([
                     {
@@ -28,10 +41,11 @@ define([
                         provider: 'checkoutProvider',
                         visible: true,
                         validation: {
-                            'required-entry': false
+                            'required-entry': false,
+                            'max_text_length': 255
                         },
                         sortOrder: 250,
-                        id: 'custom-field'
+                        value: customFieldValue
                     }
                 ]);
 
