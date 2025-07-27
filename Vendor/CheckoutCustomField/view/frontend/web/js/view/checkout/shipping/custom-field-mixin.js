@@ -10,8 +10,6 @@ define([
             initialize: function () {
                 this._super();
 
-                console.log('✅ Custom field mixin loaded');
-
                 layout([
                     {
                         parent: 'checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset',
@@ -28,7 +26,7 @@ define([
                         provider: 'checkoutProvider',
                         visible: true,
                         validation: {
-                            'required-entry': false
+                            'max_text_length': 255
                         },
                         sortOrder: 250,
                         id: 'custom-field'
