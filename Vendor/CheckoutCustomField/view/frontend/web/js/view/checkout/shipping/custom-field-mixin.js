@@ -18,12 +18,12 @@ define([
                         name: 'custom_field',
                         component: 'Magento_Ui/js/form/element/abstract',
                         config: {
-                            customScope: 'shippingAddress',
+                            customScope: 'shippingAddress.extension_attributes',
                             template: 'ui/form/field',
                             elementTmpl: 'ui/form/element/input',
                             id: 'custom-field'
                         },
-                        dataScope: 'shippingAddress.custom_field',
+                        dataScope: 'shippingAddress.extension_attributes.custom_field',
                         label: 'Custom Field',
                         provider: 'checkoutProvider',
                         visible: true,
